@@ -51,13 +51,13 @@ public class AuthorizeController {
         if(githubUser!=null){
             User user = new User();
             String token=UUID.randomUUID().toString();
+            response.addCookie(new Cookie("token",token));
             user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreat(System.currentTimeMillis());
             user.setGmtModified(user.getGmtModified());
             userMapper.insert(user);
-            response.addCookie(new Cookie("token",token));
             return "redirect:/";
             //登陆成功，写入cookie和session
         }else{
